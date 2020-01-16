@@ -1,8 +1,7 @@
 /** @jsx jsx */
 import { jsx, css } from "@emotion/core";
 import React from "react";
-// import Input from "semantic-ui-react/dist/commonjs/elements/Input";
-import ButtonSUI from "semantic-ui-react/dist/commonjs/elements/Button";
+// import ButtonSUI from "semantic-ui-react/dist/commonjs/elements/Button";
 
 const baseStyles = theme => css`
   &&& {
@@ -25,10 +24,9 @@ const Button = props => {
   const { children, onClick, className } = props;
 
   return (
-    // <Input placeholder="Search..." css={baseStyles} />
-    <ButtonSUI onClick={onClick} css={baseStyles} className={className}>
+    <button onClick={onClick} css={baseStyles} className={className}>
       {children}
-    </ButtonSUI>
+    </button>
   );
 };
 
