@@ -2,13 +2,16 @@
   "name": "component-lib",
   "version": "0.1.0",
   "private": true,
-  "main": "lib/prod.js",
+  "main": "lib/index.js",
+  "browser": "lib/index.umd.js",
+  "module": "lib/index.es.js",
   "peerDependencies": {
     "@emotion/core": ">= ^10.x.x",
     "@testing-library/jest-dom": ">= ^4.x.x",
     "emotion-theming": ">= ^10.x.x",
     "react": ">= 16.x.x",
-    "react-dom": ">= ^16.x.x"
+    "react-dom": ">= ^16.x.x",
+    "semantic-ui-react": "^0.88.x"
   },
   "dependencies": {
     "@emotion/core": "^10.0.27",
@@ -25,8 +28,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "rollup --config",
-    "build-prod": "NODE_ENV=production rollup --config",
+    "build": "rollup -c",
     "test": "./node_modules/",
     "eject": "react-scripts eject",
     "stories": "start-storybook -p 9009",
@@ -67,6 +69,9 @@
     "rollup-plugin-babel": "^4.3.3",
     "rollup-plugin-commonjs": "^10.1.0",
     "rollup-plugin-node-resolve": "^5.2.0",
-    "rollup-plugin-replace": "^2.2.0"
+    "rollup-plugin-peer-deps-external": "^2.2.0",
+    "rollup-plugin-replace": "^2.2.0",
+    "rollup-plugin-terser": "^5.2.0",
+    "rollup-plugin-uglify": "^6.0.4"
   }
 }

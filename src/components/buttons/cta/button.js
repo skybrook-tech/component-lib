@@ -1,6 +1,5 @@
 /** @jsx jsx */
 import { jsx, css } from "@emotion/core";
-import React from "react";
 import ButtonSUI from "semantic-ui-react/dist/commonjs/elements/Button";
 
 const baseStyles = theme => css`

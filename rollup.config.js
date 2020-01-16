@@ -1,27 +1,121 @@
-const babel = require("rollup-plugin-babel");
-const commonjs = require("rollup-plugin-commonjs");
-const resolve = require("rollup-plugin-node-resolve");
-const replace = require("rollup-plugin-replace");
+import babel from "rollup-plugin-babel";
+import commonjs from "rollup-plugin-commonjs";
+import resolve from "rollup-plugin-node-resolve";
+import external from "rollup-plugin-peer-deps-external";
+import { uglify } from "rollup-plugin-uglify";
+import { terser } from "rollup-plugin-terser";
 
-const NODE_ENV = process.env.NODE_ENV || "development";
-const outputFile = NODE_ENV === "production" ? "./lib/prod.js" : "./lib/dev.js";
+import packageJSON from "./package.json";
+const input = "./src/index.js";
+const minifyExtension = pathToFile => pathToFile.replace(/\.js$/, ".min.js");
 
-export default {
-  output: {
-    file: outputFile
+export default [
+  // CommonJS
+  {
+    input,
+    output: {
+      file: packageJSON.main,
+      format: "cjs"
+    },
+    plugins: [
+      babel({
+        exclude: "node_modules/**"
+      }),
+      external(),
+      resolve(),
+      commonjs()
+    ]
   },
-  input: "src/lib.js",
-  format: "cjs",
-  external: ["react", "react-dom", "@emotion/core", "emotion-theming"],
-  plugins: [
-    replace({
-      "process.env.NODE_ENV": JSON.stringify(NODE_ENV)
-    }),
-    babel({
-      exclude: "node_modules/**"
-    }),
-    resolve(),
-    commonjs(),
-    babel()
-  ]
-};
+  {
+    input,
+    output: {
+      file: minifyExtension(packageJSON.main),
+      format: "cjs"
+    },
+    plugins: [
+      babel({
+        exclude: "node_modules/**"
+      }),
+      external(),
+      resolve(),
+      commonjs(),
+      uglify()
+    ]
+  },
+  {
+    input,
+    output: {
+      file: packageJSON.browser,
+      format: "umd",
+      name: "reactSampleComponentsLibrary",
+      globals: {
+        react: "React",
+        "@emotion/styled": "styled",
+        "@emotion/core": "core"
+      }
+    },
+    plugins: [
+      babel({
+        exclude: "node_modules/**"
+      }),
+      external(),
+      resolve(),
+      commonjs()
+    ]
+  },
+  {
+    input,
+    output: {
+      file: minifyExtension(packageJSON.browser),
+      format: "umd",
+      name: "reactSampleComponentsLibrary",
+      globals: {
+        react: "React",
+        "@emotion/styled": "styled",
+        "@emotion/core": "core"
+      }
+    },
+    plugins: [
+      babel({
+        exclude: "node_modules/**"
+      }),
+      external(),
+      resolve(),
+      commonjs(),
+      terser()
+    ]
+  },
+  {
+    input,
+    output: {
+      file: packageJSON.module,
+      format: "es",
+      exports: "named"
+    },
+    plugins: [
+      babel({
+        exclude: "node_modules/**"
+      }),
+      external(),
+      resolve(),
+      commonjs()
+    ]
+  },
+  {
+    input,
+    output: {
+      file: minifyExtension(packageJSON.module),
+      format: "es",
+      exports: "named"
+    },
+    plugins: [
+      babel({
+        exclude: "node_modules/**"
+      }),
+      external(),
+      resolve(),
+      commonjs(),
+      terser()
+    ]
+  }
+];
