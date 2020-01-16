@@ -1,7 +1,7 @@
 /** @jsx jsx */
 import { jsx, css } from "@emotion/core";
 import React from "react";
-// import ButtonSUI from "semantic-ui-react/dist/commonjs/elements/Button";
+import ButtonSUI from "semantic-ui-react/dist/commonjs/elements/Button";
 
 const baseStyles = theme => css`
   &&& {
@@ -24,9 +24,9 @@ const Button = props => {
   const { children, onClick, className } = props;
 
   return (
-    <button onClick={onClick} css={baseStyles} className={className}>
+    <ButtonSUI onClick={onClick} css={baseStyles} className={className}>
       {children}
-    </button>
+    </ButtonSUI>
   );
 };
 
